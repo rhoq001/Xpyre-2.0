@@ -14,6 +14,22 @@ public class Player_View : MonoBehaviour
         p_controller = GetComponent<Player_Controller>();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            p_controller.OnGroundHit(true);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            p_controller.OnGroundHit(false);
+        }
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Control_Node") && p_model.is_controlled)
@@ -32,9 +48,14 @@ public class Player_View : MonoBehaviour
 
     private void Update()
     {
-        p_controller.Movement();
+        if (p_model.is_controlled)
+        {
+            p_controller.Movement();
+            p_controller.Jump();
+            p_controller.ReleaseControl();
+        }
         p_controller.TakeControl();
-        p_controller.ReleaseControl();
+        
     }
 
 }

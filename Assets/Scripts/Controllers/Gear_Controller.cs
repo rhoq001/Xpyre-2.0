@@ -33,7 +33,7 @@ public class Gear_Controller : MonoBehaviour
 
     public void Movement()
     {
-        if (gear_model.is_controlled && gear_model.curr_control)
+        if (gear_model.curr_control)
         {
             transform.RotateAround(gear_model.curr_control.transform.position, transform.up, gear_model.m_Input.MoveInput.x * gear_model.rotationSpeed * Time.deltaTime);
         }
@@ -41,7 +41,7 @@ public class Gear_Controller : MonoBehaviour
 
     public void TakeControl()
     {
-        if (gear_model.m_Input.PassControlInput() && gear_model.can_accept_control)
+        if (gear_model.m_Input.PassControlInput && gear_model.can_accept_control)
         {
             gear_model.is_controlled = true;
         }
@@ -50,7 +50,7 @@ public class Gear_Controller : MonoBehaviour
 
     public void ReleaseControl()
     {
-        if (gear_model.m_Input.ControlBackToPlayerInput() && gear_model.is_controlled)
+        if (gear_model.m_Input.ControlBackToPlayerInput)
         {
             gear_model.is_controlled = false;
         }

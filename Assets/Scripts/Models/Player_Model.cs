@@ -23,6 +23,7 @@ public class Player_Model : MonoBehaviour
     public bool is_controlled;
     public bool can_pass_control;
     public bool is_attached;
+    public bool onGround;
 
 
 

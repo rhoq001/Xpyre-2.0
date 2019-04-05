@@ -26,22 +26,28 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public bool PassControlInput()
+    public bool PassControlInput
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        get
         {
-            return true;
+            return Input.GetKeyDown(KeyCode.E);
         }
-        return false;
     }
 
-    public bool ControlBackToPlayerInput()
+    public bool ControlBackToPlayerInput
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        get
         {
-            return true;
+            return Input.GetKeyDown(KeyCode.Q);
         }
-        return false;
+    }
+
+    public bool JumpInput
+    {
+        get
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        }
     }
 
     //public float JumpInput

@@ -16,8 +16,12 @@ public class Gear_View : MonoBehaviour
 
     private void Update()
     {
-        gear_controller.Movement();
+        if (gear_model.is_controlled)
+        {
+            gear_controller.Movement();
+            gear_controller.ReleaseControl();
+        }
         gear_controller.TakeControl();
-        gear_controller.ReleaseControl();
+        
     }
 }
