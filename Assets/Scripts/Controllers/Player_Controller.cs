@@ -12,10 +12,6 @@ public class Player_Controller : MonoBehaviour
     {
         p_model = GetComponent<Player_Model>();
         p_view = GetComponent<Player_View>();
-
-        p_model.m_Input = GameObject.FindObjectOfType<Xpyre_Application>().controller.GetComponent<PlayerInput>();
-        p_model.playerRigidbody = GetComponent<Rigidbody>();
-        p_model.is_controlled = true;
     }
     public void OnControlNode(bool onControl)
     {
@@ -39,6 +35,8 @@ public class Player_Controller : MonoBehaviour
         if (p_model.m_Input.ControlBackToPlayerInput && !p_model.is_controlled)
         {
             p_model.is_controlled = true;
+            p_model.playerRigidbody.isKinematic = false;
+            p_model.mesh.enabled = true;
         }
 
     }
@@ -48,6 +46,8 @@ public class Player_Controller : MonoBehaviour
         if (p_model.m_Input.PassControlInput && p_model.can_pass_control)
         {
             p_model.is_controlled = false;
+            p_model.playerRigidbody.isKinematic = true;
+            p_model.mesh.enabled = false;
         }
 
     }

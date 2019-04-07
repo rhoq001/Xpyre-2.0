@@ -17,7 +17,8 @@ public class Node_View : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            node_model.gear.PlayerOnControl(true, node_model);
+            node_model.control_obj.PlayerOnControl(true, node_model);
+
         }
     }
 
@@ -25,7 +26,7 @@ public class Node_View : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            node_model.gear.PlayerOnControl(false, node_model);
+            node_model.control_obj.PlayerOnControl(false, null);
         }
     }
 }

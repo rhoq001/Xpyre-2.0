@@ -5,11 +5,19 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     protected Vector2 m_Movement;
+    protected Vector2 m_ArrowMovement;
     protected Vector2 m_Camera;
     protected KeyCode m_space;
     // protected float m_Jump; // made for future jump mechanic
 
-
+    public Vector2 MoveArrowInput
+    {
+        get
+        {
+            return m_ArrowMovement;
+        }
+    }
+    
     public Vector2 MoveInput
     {
         get
@@ -60,8 +68,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        m_Movement.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        m_Movement.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         m_Camera.Set(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        m_space = KeyCode.Space;
     }
 }
