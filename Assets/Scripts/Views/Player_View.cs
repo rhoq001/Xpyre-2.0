@@ -46,7 +46,7 @@ public class Player_View : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (p_model.is_controlled)
         {

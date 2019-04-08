@@ -9,14 +9,6 @@ public class PlayerInput : MonoBehaviour
     protected Vector2 m_Camera;
     protected KeyCode m_space;
     // protected float m_Jump; // made for future jump mechanic
-
-    public Vector2 MoveArrowInput
-    {
-        get
-        {
-            return m_ArrowMovement;
-        }
-    }
     
     public Vector2 MoveInput
     {
@@ -47,6 +39,25 @@ public class PlayerInput : MonoBehaviour
         get
         {
             return Input.GetKeyDown(KeyCode.Q);
+        }
+    }
+
+    public int ShiftNodePos
+    {
+        get
+        {
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                return 1;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 

@@ -14,12 +14,13 @@ public class ControlObj_View : MonoBehaviour
         controlobj_model = GetComponent<ControlObj_Model>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (controlobj_model.is_controlled)
         {
             controlobj_controller.Rotate();
             controlobj_controller.Movement();
+            controlobj_controller.MovePlayerNode();
             controlobj_controller.ReleaseControl();
         }
         controlobj_controller.TakeControl();

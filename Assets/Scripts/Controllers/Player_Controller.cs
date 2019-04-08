@@ -37,6 +37,7 @@ public class Player_Controller : MonoBehaviour
             p_model.is_controlled = true;
             p_model.playerRigidbody.isKinematic = false;
             p_model.mesh.enabled = true;
+            p_model.playerRigidbody.mass = 1;
         }
 
     }
@@ -48,6 +49,7 @@ public class Player_Controller : MonoBehaviour
             p_model.is_controlled = false;
             p_model.playerRigidbody.isKinematic = true;
             p_model.mesh.enabled = false;
+            p_model.playerRigidbody.mass = 0;
         }
 
     }

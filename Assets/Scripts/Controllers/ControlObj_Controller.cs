@@ -19,11 +19,13 @@ public class ControlObj_Controller : MonoBehaviour
         if (OnControl && new_node)
         {
             controlobj_model.curr_control_node = new_node;
+            controlobj_model.curr_node_index = controlobj_model.curr_control_node.node_num;
             controlobj_model.can_accept_control = true;
         }
         else
         {
             controlobj_model.curr_control_node = null;
+            controlobj_model.curr_node_index = -1;
             controlobj_model.can_accept_control = false;
         }
         
@@ -33,7 +35,7 @@ public class ControlObj_Controller : MonoBehaviour
     {
         if (controlobj_model.curr_control_node && controlobj_model.canRotate)
         {
-            transform.RotateAround(controlobj_model.curr_control_node.transform.position, transform.up, controlobj_model.m_Input.MoveInput.x * controlobj_model.rotationSpeed * Time.deltaTime);
+            transform.Rotate(controlobj_model.rotationAxis, controlobj_model.m_Input.MoveInput.x * controlobj_model.rotationSpeed * Time.deltaTime, Space.World);
         }
     }
 
@@ -41,7 +43,7 @@ public class ControlObj_Controller : MonoBehaviour
     {
         if(!(controlobj_model.movement == Vector3.zero))
         {
-            controlobj_model.transform.Translate(controlobj_model.movement*controlobj_model.m_Input.MoveInput.y*controlobj_model.moveSpeed, Space.World);
+            controlobj_model.objRigidbody.AddForce(controlobj_model.movement*controlobj_model.m_Input.MoveInput.y*controlobj_model.moveSpeed*Time.deltaTime);
         }
     }
 
@@ -49,10 +51,17 @@ public class ControlObj_Controller : MonoBehaviour
     {
         if (controlobj_model.m_Input.PassControlInput && controlobj_model.can_accept_control)
         {
+            Vector3 setPos = new Vector3(controlobj_model.curr_control_node.transform.localPosition.x, 0f, controlobj_model.curr_control_node.transform.localPosition.z);
+            setPos.y = (transform.lossyScale.y / 2) + (controlobj_model.player.lossyScale.y / 2);
+
             controlobj_model.is_controlled = true;
             controlobj_model.player.rotation = transform.rotation;
             controlobj_model.player.parent = transform;
+
+            controlobj_model.player.localPosition = setPos;
+
             ScaleAttached();
+            controlobj_model.objRigidbody.isKinematic = false;
             controlobj_model.mesh.material = controlobj_model.controlled_material;
         }
         
@@ -65,8 +74,32 @@ public class ControlObj_Controller : MonoBehaviour
             controlobj_model.is_controlled = false;
             controlobj_model.player.parent = null;
             controlobj_model.mesh.material = controlobj_model.uncontrolled_material;
+            controlobj_model.objRigidbody.isKinematic = true;
         }
         
+    }
+
+    public void MovePlayerNode()
+    {
+        int index_shift = controlobj_model.m_Input.ShiftNodePos;
+        if(index_shift != 0)
+        {
+            Vector3 setPos = new Vector3(controlobj_model.curr_control_node.transform.localPosition.x, 0f, controlobj_model.curr_control_node.transform.localPosition.z);
+            setPos.y = (transform.lossyScale.y / 2) + (controlobj_model.player.lossyScale.y / 2);
+
+            controlobj_model.curr_node_index = controlobj_model.curr_node_index + index_shift;
+
+            if (controlobj_model.curr_node_index < 0)
+            {
+                controlobj_model.curr_node_index = controlobj_model.nodes.Count - 1;
+            }
+            else if (controlobj_model.curr_node_index > controlobj_model.nodes.Count - 1)
+            {
+                controlobj_model.curr_node_index = 0;
+            }
+            controlobj_model.curr_control_node = controlobj_model.nodes[controlobj_model.curr_node_index];
+            controlobj_model.player.localPosition = setPos;
+        }
     }
 
     private void ScaleAttached()
